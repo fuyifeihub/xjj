@@ -20,16 +20,7 @@
     <input id="startDate" type="text" >
   </body>
   <script type="text/javascript">
-//	$(function () { 
-		$('#startDate').mobiscroll().date({  
-	  theme: 'mobiscroll', 
-	  lang:'zh',   
-	  display: 'bottom',
-	  dateFormat: 'yyyy-mm-dd' ,
-	  dateOrder: 'yyyymmdd', //面板中日期排列格式
-//	 display: 'inline'
-	  }); 
-//	})
+  var startdate=new Date().getFullYear();
 	function initStartDate(){
 	  //默认值先取批号的前4位（非数字部分自动跳过），
 	  var re = /^[0-9]+.?[0-9]*/;
@@ -71,6 +62,7 @@
 				  initDay="30";
 			  }
 			  $("#startDate").val(inityear+"年"+realinitmon+"月"+initDay+"日");
+			  startdate=inityear;
 		  }else if(thisyear-("20"+inityear.substring(0,2))<=5 && thisyear-("20"+inityear.substring(0,2))>=0 ){
 			  initmon=inityear.substring(2,4);
 			  if(initmon>0&&initmon<=12){
@@ -93,10 +85,19 @@
 				  initDay="30";
 			  }
 			  $("#startDate").val("20"+inityear.substring(0,2)+"年"+realinitmon+"月"+initDay+"日");
+			  startdate="20"+inityear.substring(0,2);
 		  }else{
 			  $("#startDate").val(thisyear+"年07月31日");
+			  startdate= thisyear;
 		  }
-
+		   
+	$('#startDate').mobiscroll().date({  
+	  theme: 'mobiscroll', 
+	  lang:'zh',   
+	  display: 'bottom',
+	  dateFormat: 'yy年mm月dd日' ,
+	  dateOrder: 'yymmdd' //面板中日期排列格式
+	  }); 
   
 	}
   
