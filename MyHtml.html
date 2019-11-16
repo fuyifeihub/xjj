@@ -9,15 +9,17 @@
 	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
 	<!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
 		<link rel="stylesheet" type="text/css" href="mobiscroll.custom-2.5.2.min.css">
-	    <script type="text/javascript" src="jquery-3.1.1.min.js"></script>
-	    <script type="text/javascript" src="mobiscroll.custom-2.5.2.min.js"></script>
+		<script type="text/javascript" src="jquery-3.1.1.min.js"></script>
+		<script type="text/javascript" src="mobiscroll.custom-2.5.2.min.js"></script>
+	    <script type="text/javascript" src="mobiscroll.android-2.5.1.js"></script>
 	   
 	
   </head>
 
   <body>
     <input id="inputtext" onblur="initStartDate()" >
-    <input id="startDate" type="text" >
+	<input id="startDate" type="text" >
+	<input id="endDate" type="text" >
   </body>
   <script type="text/javascript">
   var startdate=new Date().getFullYear();
@@ -62,7 +64,7 @@
 				  initDay="30";
 			  }
 			  $("#startDate").val(inityear+"年"+realinitmon+"月"+initDay+"日");
-			  startdate=inityear;
+			  $("#endtDate").val(inityear+"年"+realinitmon+"月"+initDay+"日");
 		  }else if(thisyear-("20"+inityear.substring(0,2))<=5 && thisyear-("20"+inityear.substring(0,2))>=0 ){
 			  initmon=inityear.substring(2,4);
 			  if(initmon>0&&initmon<=12){
@@ -85,10 +87,10 @@
 				  initDay="30";
 			  }
 			  $("#startDate").val("20"+inityear.substring(0,2)+"年"+realinitmon+"月"+initDay+"日");
-			  startdate="20"+inityear.substring(0,2);
+			  $("#endDate").val("20"+inityear.substring(0,2)+"年"+realinitmon+"月"+initDay+"日");
 		  }else{
 			  $("#startDate").val(thisyear+"年07月31日");
-			  startdate= thisyear;
+			  $("#endDate").val(thisyear+"年07月31日");
 		  }
 		   
 	$('#startDate').mobiscroll().date({  
@@ -98,7 +100,7 @@
 	  dateFormat: 'yy年mm月dd日' ,
 	  dateOrder: 'yymmdd' //面板中日期排列格式
 	  }); 
-  
+
 	}
   
   </script>
