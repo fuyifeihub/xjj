@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>MyHtml.html</title>
+	
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+    
+	<!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+		<link rel="stylesheet" type="text/css" href="mobiscroll.custom-2.5.2.min.css">
+	    <script type="text/javascript" src="jquery-3.1.1.min.js"></script>
+	    <script type="text/javascript" src="mobiscroll.custom-2.5.2.min.js"></script>
+	   
+	
+  </head>
+
+  <body>
+    <input id="inputtext" onblur="initStartDate()" >
+    <input id="startDate" type="text" >
+  </body>
+  <script type="text/javascript">
+//	$(function () { 
+		$('#startDate').mobiscroll().date({  
+	  theme: 'mobiscroll', 
+	  lang:'zh',   
+	  display: 'bottom',
+	mode:'mode',
+	  dateFormat: 'yyyy-mm-dd' ,
+	  dateOrder: 'yyyymmdd', //面板中日期排列格式
+//	 display: 'inline'
+	  }); 
+//	})
+	function initStartDate(){
+	  //默认值先取批号的前4位（非数字部分自动跳过），
+	  var re = /^[0-9]+.?[0-9]*/;
+	  var lotno = $("#inputtext").val();
+	  var inityear="";
+	  var initmon="";
+	  for(var i=0;i<lotno.length;i++){
+		  if(re.test(lotno.charAt(i))&&inityear.length<4){
+		  inityear+=lotno.charAt(i);
+		  }else 
+		  if(re.test(lotno.charAt(i))&&inityear.length==4&&initmon.length<2){
+			  initmon+=lotno.charAt(i);
+		  }
+	  }
+	  console.log(initmon);
+	  //如果判断前四位取值不是当前年比如2019的前5年，则用20拼前两位的值再次和当前年比较，如果这个值不在2019的前5年，以上为取值成功。反之则取当前年
+	  var date = new Date();
+	  var thisyear=date.getFullYear();
+	  var realinitmon;
+	  var initDay;
+	  var monarr=new Array("01","03","05","07","08","10","12");
+		  if(thisyear-inityear<=5&&thisyear-inityear>=0){
+			  if(initmon>0&&initmon<=12){
+				  realinitmon=initmon;
+			  }else if(initmon.substring(0,1)>0){
+				  realinitmon="0"+initmon.substring(0,1);
+			  }else{
+				  realinitmon="07";
+			  }
+			  if(realinitmon=="02"){
+				  if(inityear%4==0&&inityear%100!=0){
+					  initDay="29";	
+				  }else{
+					  initDay="28";	
+				  }
+			  }else if(monarr.includes(realinitmon)){
+				  initDay="31";
+			  }else{
+				  initDay="30";
+			  }
+			  $("#startDate").val(inityear+"年"+realinitmon+"月"+initDay+"日");
+		  }else if(thisyear-("20"+inityear.substring(0,2))<=5 && thisyear-("20"+inityear.substring(0,2))>=0 ){
+			  initmon=inityear.substring(2,4);
+			  if(initmon>0&&initmon<=12){
+				  realinitmon=initmon;
+			  }else if(initmon.substring(0,1)>0){
+				  realinitmon="0"+initmon.substring(0,1);
+			  }else{
+				  realinitmon="07";
+			  }
+			  if(realinitmon=="02"){
+				  var subInitYear="20"+inityear.substring(0,2);
+				  if(subInitYear%4==0&&subInitYear%100!=0){
+					  initDay="29";	
+				  }else{
+					  initDay="28";	
+				  }
+			  }else if(monarr.includes(realinitmon)){
+				  initDay="31";
+			  }else{
+				  initDay="30";
+			  }
+			  $("#startDate").val("20"+inityear.substring(0,2)+"年"+realinitmon+"月"+initDay+"日");
+		  }else{
+			  $("#startDate").val(thisyear+"年07月31日");
+		  }
+
+  
+	}
+  
+  </script>
+</html>
